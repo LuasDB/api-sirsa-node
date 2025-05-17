@@ -8,7 +8,7 @@ import path from 'path'
 
 class Auth{
   constructor(){
-
+    this.logo = 'logo_sirsa'
   }
 
   async create(data){
@@ -48,8 +48,8 @@ class Auth{
             data:{name,company,resetLink},
             templateEmail:'register',
             attachments:[{
-              filename:'samartech',
-              path:path.join('emails/samartech.png'),
+              filename:this.logo,
+              path:path.join(`emails/${this.logo}.png`),
               cid:'logo_empresa'
             }]
           })
@@ -83,9 +83,9 @@ class Auth{
       if(!isPasswordValid){
         throw Boom.unauthorized('Email o passwor incorrectos')
       }
-
-      const payload = { userId:user._id, email:user.email, nombre:user.name}
-      const token = jwt.sign(payload,this.jwtSecret,{ expiresIn:this.jwtExpiration})
+      delete user.password
+      const payload = { ...user }
+      const token = jwt.sign(payload,config.jwtSecret,{ expiresIn:'1d'})
 
       return token
 
@@ -116,9 +116,9 @@ class Auth{
         data:{name:user.name,resetLink},
         templateEmail:'restartPass',
         attachments:[{
-          filename:'samartech',
-            path:path.join('emails/samartech.png'),
-            cid:'logo_empresa'
+          filename:this.logo,
+          path:path.join(`emails/${this.logo}.png`),
+          cid:'logo_empresa'
         }]
       })
       return 'Se ha enviado un enlace de restablecimiento de contraseña a tu correo.'

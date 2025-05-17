@@ -6,7 +6,9 @@ import config from './../config.js'
 const sendMail = async({from,to,subject,data,templateEmail,attachments=[]})=>{
 
   const transporter = nodemailer.createTransport({
-    service:config.serviceEmail,
+    host:config.hostEmailSupport,
+    port:config.portEmailSupport,
+    secure:false,//Este es falso para puesto 587 y true para puerto 465
     auth:{
       user:config.emailSupport,
       pass:config.passSupport
