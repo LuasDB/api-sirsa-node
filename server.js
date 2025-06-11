@@ -7,6 +7,8 @@ import { logErrors,errorHandler} from './middlewares/hanldeErrors.js'
 import { client } from './db/mongoClient.js'
 import swaggerUi from 'swagger-ui-express'
 import { readFile } from 'fs/promises'
+import statusMonitor from 'express-status-monitor'
+import {trafficMonitor} from './middlewares/traffiMonitor.js'
 
 const data = await readFile('./api_documentation_swaggerUi.json', 'utf-8')
 const swaggerDoc = JSON.parse(data)
@@ -17,6 +19,8 @@ const app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
+app.use(statusMonitor())
+app.use(trafficMonitor)
 //Ejecutamos CORS, primero crearemos las url a las que le daremos acceso
   // const whitelist = ['http://localhost:3000','http://127.0.0.1'];
   // const options ={

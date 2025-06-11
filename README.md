@@ -22,7 +22,7 @@ Este repositorio es una plantilla que servira como base para crear APIs REST mod
 
 ```bash
 git clone https://github.com/LuasDB/api-machote-node.git
-cd pi-machote-node
+cd api-machote-node
 ```
 
 2. Instala las dependencias:
@@ -31,13 +31,13 @@ cd pi-machote-node
 npm install
 ```
 
-3. Crea un archivo .env basado en .env.example:
+3. Crea un archivo .env :
 
 ```bash
-cp .env.example .env
+mkdir .env
 
 ```
-4. Configura las variables de entorno en tu archivo .env (puesto, MongoDB,JWT, etc):
+4. Configura las variables de entorno en tu archivo .env (puerto, MongoDB,JWT, etc), copia el ejemplo de abajo y cambia el valor de las variables por tus datos propios:
 
 ```bash
 # Puerto en el que se ejecuta el servidor
@@ -57,10 +57,10 @@ MONGO_DATABASE=apiMachote
 JWT_SECRET=your_jwt_secret_here
 
 # Configuración para envío de correos
-SERVICE_EMAIL=gmail
 EMAIL_SUPPORT=your_email@example.com
 PASS_SUPPORT=your_app_password_here
-
+HOST_EMAIL_SUPPORT=smtp.gmail.com / el host de tu proveedor de mail
+PORT_EMAIL_SUPPORT=587 / el puerto que te indique tu proveedor de mail
 
 ```
 
@@ -82,6 +82,24 @@ npm run dev
 npm start
 
 ```
+
+
+##  💡 TIP PARA DESARROLLO
+La API esta configirada para que en modo desarrollo otros dispositivos que se encuentren dentro de la misma red LAN puedan acceder a ella usando la IP de la computadora donde se esta desarrollando (La IP asignada por tu red, no localhost). Esto es muy util si estas desarrollando el frontend bajo el principio MOBILE FIRST, y quieres ver como se ve tu app desde tu dispositivo mobil. 
+
+Si estas usando WSL , es necesario redirigir los puertos desde Windows al entorno de WSL. Abre tu terminal de windows como administrador y coloca la siguiente linea:
+
+```bash
+netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=3000 connectaddress=172.17.46.69 connectport=3000
+
+```
+Donde connectaddress es la IP que te asigna WSL, para conocerla en la terminal de WSL ejecuta :
+```bash
+ip addr
+
+```
+Busca la IP despues de la palabra 'inet'
+
 ## 🧰Estructura del Proyecto
 ```bash
 📦src

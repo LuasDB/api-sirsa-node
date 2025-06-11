@@ -3,6 +3,7 @@ import 'dotenv/config'
 export default {
   port:process.env.PORT || 3000,
   server:process.env.SERVER,
+  appUrl:process.env.URL_APP,
   mongoURI:process.env.MONGO_URI,
   database:process.env.MONGO_DATABASE,
   jwtSecret:process.env.JWT_SECRET,
